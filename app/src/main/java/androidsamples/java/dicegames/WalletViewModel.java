@@ -1,14 +1,30 @@
 package androidsamples.java.dicegames;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.lifecycle.ViewModel;
 
 public class WalletViewModel extends ViewModel {
+  int WIN_VALUE = 6;
+  int INCREMENT = 5;
+  int INCREMENT_DOUBLE = 10;
+  int DECREMENT = 5;
+  private int rolls = 0;
+  private int prev_roll = 0;
+  private int curr_roll = 0;
+  private int single_sixes = 0;
+  private int double_sixes = 0;
+  private int double_others = 0;
+  private final String TAG = "WalletViewModel";
+  private int mBalance;
+  Die mDie;
 
-  /**
-   * The no argument constructor.
-   */
   public WalletViewModel() {
-    // TODO implement method
+    mBalance = 0;
+    mDie = new Die6();
   }
 
   /**
@@ -16,15 +32,45 @@ public class WalletViewModel extends ViewModel {
    *
    */
   public int balance() {
-    // TODO implement method
-    return 0;
+    return mBalance;
   }
 
   /**
    * Rolls the {@link Die} in the wallet and implements the changes accordingly.
    */
   public void rollDie() {
-    // TODO implement method
+    //roll
+    rolls++;
+    mDie.roll();
+//    Log.d(TAG, "Die roll = " + mDie.value());
+    //add coins if win_value rolled
+    prev_roll = curr_roll;
+    curr_roll = mDie.value();
+    if(mDie.value() == WIN_VALUE){
+      if(prev_roll == WIN_VALUE){
+//        Log.d(TAG, "Double Sixes!");
+        double_sixes++;
+        mBalance += INCREMENT_DOUBLE;
+//        Log.d(TAG, "New Balance = " + mBalance);
+      }
+      else{
+        single_sixes++;
+        mBalance += INCREMENT;
+//        Log.d(TAG, "New Balance = " + mBalance);
+      }
+    }
+    else{
+      if(prev_roll == curr_roll){
+//        Log.d(TAG, "Double others!");
+        double_others++;
+        mBalance -= DECREMENT;
+//        Log.d(TAG, "New Balance = " + mBalance);
+      }
+    }
+  }
+
+  public boolean isWin(){
+    return mDie.value() == WIN_VALUE;
   }
 
   /**
@@ -32,8 +78,7 @@ public class WalletViewModel extends ViewModel {
    *
    */
   public int dieValue() {
-    // TODO implement method
-    return 0;
+    return mDie.value();
   }
 
   /**
@@ -41,8 +86,7 @@ public class WalletViewModel extends ViewModel {
    *
    */
   public int singleSixes() {
-    // TODO implement method
-    return 0;
+    return single_sixes;
   }
 
   /**
@@ -50,8 +94,7 @@ public class WalletViewModel extends ViewModel {
    *
    */
   public int totalRolls() {
-    // TODO implement method
-    return 0;
+    return rolls;
   }
 
   /**
@@ -59,8 +102,7 @@ public class WalletViewModel extends ViewModel {
    *
    */
   public int doubleSixes() {
-    // TODO implement method
-    return 0;
+    return double_sixes;
   }
 
   /**
@@ -68,8 +110,7 @@ public class WalletViewModel extends ViewModel {
    *
    */
   public int doubleOthers() {
-    // TODO implement method
-    return 0;
+    return double_others;
   }
 
   /**
@@ -77,7 +118,17 @@ public class WalletViewModel extends ViewModel {
    *
    */
   public int previousRoll() {
-    // TODO implement method
-    return 0;
+//    Log.d(TAG, "Previous Die roll = " + prev_roll);
+    return prev_roll;
+  }
+
+  public void setBalance(int balance){
+    mBalance = balance;
+  }
+
+  @Override
+  protected void onCleared() {
+    super.onCleared();
+//    Log.d(TAG, "onCleared");
   }
 }
