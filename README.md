@@ -44,6 +44,19 @@ The UI is designed using Linear Layouts and Text Views, with separate layouts fo
   - Conducted stress testing using Monkey Test for 500, 800, 1000, and 1500 events.
   - The system crashed during the 1500-event test with the following message: **"System appears to have crashed at event 377 of 1500 using seed 1726075928515"**.
 
+### Accessibility
+- **Using Talkback**: Talkback mode required significant effort to go to the home page and find the application. The die was not difficult to find, but it was hard to realise that I am pressing on the die. Further, due to the required double click, the die sometimes didn't roll at all leading to confusion if I am pressing on it at all. However after a 1-2 minutes, I was able to press it for a few times. The talkback helped understand what is going on.
+
+- **Image Button**:
+  - Use a content description attribute to help the screen reader recognise the button.
+  - Make the image large enough so that the user is able to find it.
+
+- **Suggestions & Solutions**:
+  - Scaling the text inside the die button. 
+  - "Multiple items have the same description"
+  - Changed dp to sp for making the die button and the text inside it more flexible
+
+
 ## Time and Effort
 - **Total Time Taken**: Approximately 14 hours
 - **Extent of Pair Programming**: 3 (on a scale of 1 to 5)
