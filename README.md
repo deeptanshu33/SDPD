@@ -47,4 +47,4 @@ The UI is designed using Linear Layouts and Text Views, with separate layouts fo
 ## Time and Effort
 - **Total Time Taken**: Approximately 14 hours
 - **Extent of Pair Programming**: 3 (on a scale of 1 to 5)
-- **Difficulty Level**: 8 (on a scale of 1 to 10)
+- **Difficulty Level**: 7 (on a scale of 1 to 10)
