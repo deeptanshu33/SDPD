@@ -5,6 +5,8 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anyOf;
 
 import android.view.View;
@@ -20,6 +22,17 @@ import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.ViewAssertion;
+
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
+import static org.junit.Assert.assertNotNull;
+
 
 // Run tests using AndroidJUnit4 runner
 @RunWith(AndroidJUnit4.class)
@@ -76,5 +89,53 @@ public class WalletInstrumentedTest {
     onView(withId(R.id.sixes_rolled_value)).check(matches(withTextPattern("\\d+")));
     onView(withId(R.id.double_sixes_rolled_value)).check(matches(withTextPattern("\\d+")));
     onView(withId(R.id.double_others_rolled_value)).check(matches(withTextPattern("\\d+")));
+  }
+
+  @Test
+  public void checkValidStateAfterTwoRolls(){
+    for(int i = 0; i<2; i++){
+      onView(withId(R.id.btn_die)).perform(click());
+    }
+
+    String[] capturedText = new String[1];
+    onView(withId(R.id.txt_balance)).check(new TextViewTextAssertion(capturedText));
+    int balance = Integer.parseInt(capturedText[0]);
+    assertThat("Balance should be between 15 and -5", balance, allOf(greaterThanOrEqualTo(-5), lessThanOrEqualTo(15)));
+  }
+
+  @Test
+  public void checkValidStateAfterThreeRolls(){
+    for(int i = 0; i<3; i++){
+      onView(withId(R.id.btn_die)).perform(click());
+    }
+
+    String[] capturedText = new String[1];
+    onView(withId(R.id.txt_balance)).check(new TextViewTextAssertion(capturedText));
+    int balance = Integer.parseInt(capturedText[0]);
+    assertThat("Balance should be between 25 and -10", balance, allOf(greaterThanOrEqualTo(-10), lessThanOrEqualTo(25)));
+  }
+
+  @Test
+  public void checkValidStateAfterFourRolls(){
+    for(int i = 0; i<4; i++){
+      onView(withId(R.id.btn_die)).perform(click());
+    }
+
+    String[] capturedText = new String[1];
+    onView(withId(R.id.txt_balance)).check(new TextViewTextAssertion(capturedText));
+    int balance = Integer.parseInt(capturedText[0]);
+    assertThat("Balance should be between 35 and -15", balance, allOf(greaterThanOrEqualTo(-15), lessThanOrEqualTo(35)));
+  }
+
+  @Test
+  public void checkValidStateAfterFiveRolls(){
+    for(int i = 0; i<5; i++){
+      onView(withId(R.id.btn_die)).perform(click());
+    }
+
+    String[] capturedText = new String[1];
+    onView(withId(R.id.txt_balance)).check(new TextViewTextAssertion(capturedText));
+    int balance = Integer.parseInt(capturedText[0]);
+    assertThat("Balance should be between 45 and -20", balance, allOf(greaterThanOrEqualTo(-20), lessThanOrEqualTo(45)));
   }
 }
