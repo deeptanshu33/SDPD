@@ -54,7 +54,7 @@ The UI is designed using Linear Layouts and Text Views, with separate layouts fo
 - **Suggestions & Solutions**:
   - Scaling the text inside the die button. 
   - "Multiple items have the same description"
-  - Changed dp to sp for making the die button and the text inside it more flexible
+  - Updated the button to use `wrap_content` with `minWidth` and `minHeight`, fixing accessibility issues related to text scaling.
 
 
 ## Time and Effort
