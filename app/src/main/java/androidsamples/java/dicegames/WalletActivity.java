@@ -3,10 +3,14 @@ package androidsamples.java.dicegames;
 import static android.widget.Toast.*;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import androidx.appcompat.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +31,7 @@ public class WalletActivity extends AppCompatActivity {
   private WalletViewModel mWalletVM;
 
 
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -42,6 +47,7 @@ public class WalletActivity extends AppCompatActivity {
     mTotalRolls = findViewById(R.id.total_dice_rolls_value);
     mDoubleSixes = findViewById(R.id.double_sixes_rolled_value);
     mDoubleOthers = findViewById(R.id.double_others_rolled_value);
+    ImageButton settingsButton = (ImageButton)findViewById(R.id.btn_settings);
 
     mWalletVM = new ViewModelProvider(this).get(WalletViewModel.class);
     updateUI();
@@ -63,6 +69,56 @@ public class WalletActivity extends AppCompatActivity {
         updateUI();
       }
     });
+
+    settingsButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        // Change background color to yellow
+        showSettingsOptionsDialog();
+      }
+    });
+  }
+
+  private void showSettingsOptionsDialog(){
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle("Settings");
+
+    String[] settingsOptions = {"Change Background Color"};
+
+    builder.setItems(settingsOptions, new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialogInterface, int i) {
+        if(i==0){
+          showColorOptionsDialog();
+        }
+      }
+    });
+
+    AlertDialog dialog = builder.create();
+    dialog.show();
+  }
+
+  private void showColorOptionsDialog(){
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle("Choose a background color");
+
+    String[] colors = {"Yellow", "Default (White)"};
+
+    builder.setItems(colors, new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialogInterface, int i) {
+        View mainLayout = findViewById(R.id.main_layout);
+
+        if(i==0){
+          mainLayout.setBackgroundColor(getResources().getColor(android.R.color.holo_orange_light));
+        } else if (i == 1) {
+          mainLayout.setBackgroundColor(Color.WHITE);
+        }
+      }
+    });
+
+    AlertDialog dialog = builder.create();
+    dialog.show();
   }
 
   private void updateUI() {

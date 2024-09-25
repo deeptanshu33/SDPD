@@ -16,4 +16,6 @@
   <string name="double_sixes_val">0</string>
   <string name="double_others">Double Others: </string>
   <string name="double_others_val">0</string>
+  <string name="Settings">Settings</string>
+  <string name="BGColorChange">Change Background Color</string>
 </resources>
